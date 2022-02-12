@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'custom_page_route.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:login_todo/pages/login.dart';
+import './google_auth.dart';
+
 
 class LogOut extends StatefulWidget {
   const LogOut({ Key? key }) : super(key: key);
@@ -9,6 +13,8 @@ class LogOut extends StatefulWidget {
 }
 
 class _LogOutState extends State<LogOut> {
+   
+
   @override
   Widget build(BuildContext context) {
     return  AlertDialog(
@@ -22,7 +28,14 @@ class _LogOutState extends State<LogOut> {
     ), 
     content: const Text('Are you sure?'),
     actions: [
-      MaterialButton(onPressed: (){},
+      MaterialButton(
+        onPressed: () async {
+      await  AuthService().signOut();
+      Navigator.of(context).push(
+      CustomPageRoute(child: const LoginPage(),
+        ),
+       );
+      },
       color: Colors.green,
       child: const Text('Yes'),
       ),
@@ -35,5 +48,8 @@ class _LogOutState extends State<LogOut> {
     ],
 
     );
+   
+   }
   }
-}
+
+  

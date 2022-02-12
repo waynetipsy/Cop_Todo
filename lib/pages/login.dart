@@ -1,7 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:login_todo/google_auth.dart';
+import '../google_auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({ Key? key }) : super(key: key);
@@ -11,13 +13,18 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  var child;
+  bool isLoading = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
+      body: Container(
+        decoration: const BoxDecoration(gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter ,
+          colors: [Colors.white, Colors.green]
+          ),
+          ),
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -43,15 +50,15 @@ class _LoginPageState extends State<LoginPage> {
              fontWeight: FontWeight.bold,
               ),
              ),
-           ]
-             ),
-            ),
+            ]
+           ),
+          ),
         const SizedBox(height: 10),
       const  Align(alignment: Alignment.center,
         child:  Text('Login to your account to continue',
               style: TextStyle(fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: Colors.green,
+              color: Colors.white,
               ),
              ),
             ),
@@ -68,28 +75,45 @@ class _LoginPageState extends State<LoginPage> {
             minimumSize: const Size(double.maxFinite, 65),
             
           ),
-            onPressed: () {
-              signInWithGoogle(context);
-            }, 
+            onPressed: () async {
+              
+              await signInWithGoogle(context);
+           Column(
+             children: const [
+                Center(
+                 child: CircularProgressIndicator(
+                      value: 0.5,
+                      strokeWidth: 8,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                      backgroundColor: Colors.black,
+                      ),
+                     ),
+                     SizedBox(height: 20),
+                     Text('Loading...'),
+             ],
+           );
+              },
+            
            child: Row(
              mainAxisAlignment: MainAxisAlignment.center,
              children: [
                Text('Continue With Google',
               style: GoogleFonts.lato(fontSize: 25.0,
+              color: Colors.white,
               fontWeight: FontWeight.bold,
                  ),
                ),
              const SizedBox(width: 10),
           Image.asset('assets/google.png',
             height: 36.0,
+                  ),
+                 ],
+               ),
               ),
-             ],
-           ),
-              ),
-        ),
+            ),
           ],
         ),
-      )
+      ),
     );
   }
 }

@@ -107,11 +107,10 @@ class _ViewNoteState extends State<ViewNote> {
               style: GoogleFonts.lato(
               fontSize: 18.0,
               color: Colors.white,
-                ),
-               ),
-             ),
-
-                  ],
+                     ),
+                   ),
+                  ),
+                 ],
                 ),
               ],
             ),

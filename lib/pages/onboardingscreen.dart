@@ -7,7 +7,6 @@ import '../custom_page_route.dart';
 class Onboarding extends StatefulWidget {
   const Onboarding({Key? key}) : super(key: key);
 
-
   @override
   _OnboardingState createState() => _OnboardingState();
 }
@@ -103,7 +102,7 @@ class _OnboardingState extends State<Onboarding>  {
      );
   }
   AnimatedContainer getIndicator(int pageNo) {
-    return AnimatedContainer(
+      return AnimatedContainer(
       duration: const Duration(milliseconds: 100),
       height: 10,
       width: (currentPage == pageNo) ? 20 : 10,
@@ -112,9 +111,8 @@ class _OnboardingState extends State<Onboarding>  {
         borderRadius: const BorderRadius.all(Radius.circular(5)),
         color: (currentPage == pageNo) ? Colors.black : Colors.green,
        ),
-
       );
-  }
+    }
 
   Column onBoardPage(String img, String title) {
     return Column(
@@ -150,10 +148,11 @@ class _OnboardingState extends State<Onboarding>  {
        style: GoogleFonts.lato(fontSize: 16, 
        color:  Colors.black,
        fontStyle: FontStyle.italic,
-       ), textAlign: TextAlign.center,
+       ), 
+       textAlign: TextAlign.center,
+        ),
        ),
-      ),
-     ],
+      ],
     );
   }
   setCurrentPage(int value) {

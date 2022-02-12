@@ -19,6 +19,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   CollectionReference ref = FirebaseFirestore.instance
       .collection('users')
       .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -136,12 +137,25 @@ class _HomePageState extends State<HomePage> {
                       ),
                     );
                   });
-          } else {
-                 return const CircularProgressIndicator();  
+              } else {
+            return Column(
+              children: const [
+                Center(
+                  child:  CircularProgressIndicator(
+                    value: 0.6,
+                    backgroundColor: Colors.green,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                    strokeWidth: 8,
+                  ),
+                  ),
+                  SizedBox(height: 20),
+                Text('Loading...')
+              ],
+            );
           }
-        },
-      ),
-    );
-   }
+         },
+       ),
+     );
+    }
   }
 

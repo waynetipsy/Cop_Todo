@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddNote extends StatefulWidget {
   const AddNote({Key? key}) : super(key: key);
@@ -42,6 +43,7 @@ class _AddNoteState extends State<AddNote> {
                    title = _value;
                  },
                 decoration: InputDecoration(
+                  fillColor: Colors.green,
                  focusedBorder: const UnderlineInputBorder(
                    borderSide: BorderSide(color: Colors.black,
                    ),
@@ -118,6 +120,7 @@ class _AddNoteState extends State<AddNote> {
     };
     ref.add(data);
     Navigator.pop(context);
+
 
    ScaffoldMessenger.of(context).showSnackBar( 
      const SnackBar(

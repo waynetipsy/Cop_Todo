@@ -50,6 +50,5 @@ class _CalendarState extends State<Calendar> {
         ),
       ),
     );
-    
   }
 }

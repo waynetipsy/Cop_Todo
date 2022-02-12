@@ -5,7 +5,13 @@ import 'package:google_sign_in/google_sign_in.dart';
 import './pages/homepage.dart';
 import './custom_page_route.dart';
 
-
+ class AuthService {
+   
+Future signOut () async {
+  await GoogleSignIn().signOut();
+  await FirebaseAuth.instance.signOut();
+ }
+ }
 
 GoogleSignIn googleSignIn = GoogleSignIn();
 final auth = FirebaseAuth.instance;
@@ -22,7 +28,8 @@ Future signInWithGoogle (BuildContext context) async {
 
      final AuthCredential credential = GoogleAuthProvider.credential(
     accessToken: googleSignInAuthentication.accessToken,
-    idToken: googleSignInAuthentication.idToken);
+    idToken: googleSignInAuthentication.idToken,
+    );
 
    final UserCredential authResult = 
    await auth.signInWithCredential(credential);
@@ -41,8 +48,9 @@ Future signInWithGoogle (BuildContext context) async {
      doc.reference.update(userData);
 
   Navigator.of(context).pushReplacement(
-    CustomPageRoute(child: const HomePage()
-    ),
+    CustomPageRoute(child: const HomePage(),
+    
+      ),
     );
 
    }else{
@@ -58,6 +66,5 @@ Future signInWithGoogle (BuildContext context) async {
    }
    } catch (platformException) {
      print(platformException);
-     print('Sign in not successful !');
    }
 }

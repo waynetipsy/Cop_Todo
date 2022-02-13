@@ -1,9 +1,9 @@
-import 'dart:ffi';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import '../google_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({ Key? key }) : super(key: key);
@@ -13,16 +13,27 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool isLoading = true;
+  Future<bool> _checkInternetConnection() async {
+    late bool connectStatus;
+    try {
+      final response = await InternetAddress.lookup('www.kindacode.com');
+      if (response.isNotEmpty) {
+        connectStatus = true;
+      }
+    } on SocketException catch (err) {
+      connectStatus = false;
+    }
+    return connectStatus;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(gradient: LinearGradient(
+        decoration: BoxDecoration(gradient: LinearGradient(
           begin: Alignment.topCenter,
-          end: Alignment.bottomCenter ,
-          colors: [Colors.white, Colors.green]
+          end: Alignment.bottomCenter,
+          colors: [Colors.grey.shade600, Colors.white]
           ),
           ),
         child: Column(
@@ -54,11 +65,11 @@ class _LoginPageState extends State<LoginPage> {
            ),
           ),
         const SizedBox(height: 10),
-      const  Align(alignment: Alignment.center,
+       Align(alignment: Alignment.center,
         child:  Text('Login to your account to continue',
-              style: TextStyle(fontSize: 16,
+              style: GoogleFonts.lato(fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: Colors.green,
               ),
              ),
             ),
@@ -71,14 +82,15 @@ class _LoginPageState extends State<LoginPage> {
           child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             primary: Colors.black,
-            onPrimary: Colors.green,
+            onPrimary: Colors.white,
             minimumSize: const Size(double.maxFinite, 65),
             
           ),
-            onPressed: () async {
-              
-              await signInWithGoogle(context);
-           Column(
+            onPressed: () async { 
+             final _internetConnection = await _checkInternetConnection();
+              if (_internetConnection) {
+                 await signInWithGoogle(context);
+              Column(
              children: const [
                 Center(
                  child: CircularProgressIndicator(
@@ -92,7 +104,54 @@ class _LoginPageState extends State<LoginPage> {
                      Text('Loading...'),
              ],
            );
-              },
+           SharedPreferences.getInstance().then((pref) => {
+             pref.setBool('Signin', true)
+           });
+              }else {
+                showDialog<void>(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                          backgroundColor: Colors.white,
+                          title: Text(
+                            'Check your internet connection!',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.lato(
+                                fontSize: 20,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1.2,
+                            ),
+                          ),
+                          content:  Text(
+                              'Internet connection required to signin with Google.',
+                              textAlign: TextAlign.left,
+                              style: GoogleFonts.lato(
+                                  height: 1.5,
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.5,
+                              ),
+                               
+                          ),
+                          elevation: 30,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text(
+                                'Cancel',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ),
+                          ]);
+                    });
+              }
+            }, 
             
            child: Row(
              mainAxisAlignment: MainAxisAlignment.center,

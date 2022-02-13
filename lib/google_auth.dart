@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import './pages/homepage.dart';
-import './custom_page_route.dart';
+
 
  class AuthService {
    
@@ -48,23 +48,23 @@ Future signInWithGoogle (BuildContext context) async {
      doc.reference.update(userData);
 
   Navigator.of(context).pushReplacement(
-    CustomPageRoute(child: const HomePage(),
-    
-      ),
+     MaterialPageRoute(
+    builder: (context) => const HomePage()),
     );
+    
 
    }else{
-
   users.doc(user.uid).set(userData);
-  Navigator.of(context).pushReplacement(
-    CustomPageRoute(child: const HomePage()
-          ),
+Navigator.of(context).pushReplacement(
+     MaterialPageRoute(
+    builder: (context) => const HomePage()),
         );
        }
       }
     );
    }
    } catch (platformException) {
+     // ignore: avoid_print
      print(platformException);
    }
 }

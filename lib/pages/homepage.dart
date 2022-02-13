@@ -19,6 +19,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+   final tabs = [
+     Container(),
+     Container(),
+   ];
+
+  int selectedIndex = 0;
 
   CollectionReference ref = FirebaseFirestore.instance
       .collection('users')
@@ -31,6 +37,8 @@ class _HomePageState extends State<HomePage> {
     Colors.blue.shade100,
     Colors.deepPurple.shade100,
     Colors.green.shade100,
+    Colors.white,
+    Colors.orange.shade100,
   ];
 
   @override
@@ -49,7 +57,27 @@ class _HomePageState extends State<HomePage> {
         elevation: 0.0,
         centerTitle: true,
       ),
-      backgroundColor: Colors.white,
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.black,
+        unselectedItemColor: Colors.white,
+        selectedItemColor: Colors.green,
+        currentIndex: selectedIndex,
+        onTap: (index) => setState(() {
+           selectedIndex = index;
+        }),
+
+         items: const[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.fact_check_outlined),
+            label: 'Todos'
+          ),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.done, size: 28,),
+            label: 'Completed'
+          ),
+        ],
+      ),
+
       drawer: Drawer(
         child: Container(
           color: Colors.black,
@@ -75,7 +103,15 @@ class _HomePageState extends State<HomePage> {
         ),
         backgroundColor: Colors.green,
       ),
-      body: FutureBuilder<QuerySnapshot>(
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.grey.shade600, Colors.white]
+             ),
+            ),
+        child: FutureBuilder<QuerySnapshot>(
         future: ref.orderBy('created').get(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -84,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (BuildContext context, index) {
                     Random random = Random();
-                    Color bg = myColors[random.nextInt(5)];
+                    Color bg = myColors[random.nextInt(7)];
                     Map data = snapshot.data!.docs[index].data() as Map;
                     DateTime mydateTime = data['created'].toDate();
                     String formattedTime =
@@ -125,7 +161,7 @@ class _HomePageState extends State<HomePage> {
                                 child: Text(
                                   formattedTime,
                                   style: GoogleFonts.lato(
-                                    fontSize: 12.0,
+                                    fontSize: 10.0,
                                     fontWeight: FontWeight.normal,
                                     color: Colors.black,
                                   ),
@@ -155,6 +191,7 @@ class _HomePageState extends State<HomePage> {
           }
          },
        ),
+      )
      );
     }
   }

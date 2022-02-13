@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:login_todo/pages/onboardingscreen.dart';
 import 'custom_page_route.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:login_todo/pages/login.dart';
 import './google_auth.dart';
 
 
@@ -32,7 +32,7 @@ class _LogOutState extends State<LogOut> {
         onPressed: () async {
       await  AuthService().signOut();
       Navigator.of(context).push(
-      CustomPageRoute(child: const LoginPage(),
+      CustomPageRoute(child: const Onboarding(),
         ),
        );
       },

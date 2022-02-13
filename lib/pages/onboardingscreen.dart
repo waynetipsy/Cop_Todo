@@ -21,7 +21,14 @@ class _OnboardingState extends State<Onboarding>  {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Stack(
+      body: Container(
+       decoration: BoxDecoration(gradient: LinearGradient(
+         begin: Alignment.topCenter,
+         end: Alignment.bottomCenter,
+         colors: [Colors.grey.shade600, Colors.white]
+          ),
+         ),
+     child: Stack(
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -31,9 +38,9 @@ class _OnboardingState extends State<Onboarding>  {
           child: PageView(
             controller: _pageController,
             children: [
-           onBoardPage('todonowpreview','What are your daily todos?'),
-           onBoardPage('listdo', 'Here is a todo app'),
-           onBoardPage('animation', 'your todo reminder')
+           onBoardPage('todonowpreview','Daily Todos?'),
+           onBoardPage('listdo', 'Here is a Todo App'),
+           onBoardPage('animation', 'Your Todo Reminder')
                 ],
         onPageChanged: (value) => (setCurrentPage(value)),
                ),
@@ -78,9 +85,9 @@ class _OnboardingState extends State<Onboarding>  {
             ),
            child:  Text('Get Started', 
            style: GoogleFonts.lato(
-             fontSize: 16,
+             fontSize: 19,
              fontWeight: FontWeight.bold,
-             color: Colors.white,
+             color: Colors.black,
            ) ,),   
           ),
           ),
@@ -99,6 +106,7 @@ class _OnboardingState extends State<Onboarding>  {
           ),
         ],
        ),
+      ),
      );
   }
   AnimatedContainer getIndicator(int pageNo) {
@@ -109,7 +117,7 @@ class _OnboardingState extends State<Onboarding>  {
       margin: const EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
-        color: (currentPage == pageNo) ? Colors.black : Colors.green,
+        color: (currentPage == pageNo) ? Colors.black : Colors.white,
        ),
       );
     }
@@ -144,10 +152,9 @@ class _OnboardingState extends State<Onboarding>  {
       ),
     Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 35),
-      child:  Text('2022 Goals on heck!!!',
+      child:  Text('Todo App!',
        style: GoogleFonts.lato(fontSize: 16, 
        color:  Colors.black,
-       fontStyle: FontStyle.italic,
        ), 
        textAlign: TextAlign.center,
         ),

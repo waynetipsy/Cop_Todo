@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,6 +16,8 @@ class AddNote extends StatefulWidget {
 class _AddNoteState extends State<AddNote> {
   late String title;
   late String description;
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +87,7 @@ class _AddNoteState extends State<AddNote> {
                child: Material(
                  elevation: 5.0,
                  borderRadius: BorderRadius.circular(25.0),
-                 color: Colors.green,
+                 color: Colors.black,
                  child: MaterialButton(
                   padding: const EdgeInsets.fromLTRB(
                     35.0, 13.0, 35.0, 13.0),
@@ -93,18 +96,17 @@ class _AddNoteState extends State<AddNote> {
                     style: GoogleFonts.lato(
                       fontSize: 20,
                       color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                     ),
                     ),
-                    ),
-                   onPressed: add,
+                   onPressed: add
+                   ),
                  ),
                ),
-                 ),
-                ],
-            ),
+             ],
           ),
-        
-      );
-        
+       ),
+     );    
   }
 
   void add() async {
@@ -121,12 +123,21 @@ class _AddNoteState extends State<AddNote> {
     ref.add(data);
     Navigator.pop(context);
 
-
+   final prefs = await SharedPreferences.getInstance();
+   final userData = json.encode(
+     {
+      'title': title,
+      'description': description,
+      'created': DateTime.now(),
+   }
+   );
+   prefs.setString('userData', userData);
+    
    ScaffoldMessenger.of(context).showSnackBar( 
      const SnackBar(
     content:  Text('Todo added!'),
     duration: Duration(seconds: 3)
     ),
-  );
+   );
+  }
  }
-}

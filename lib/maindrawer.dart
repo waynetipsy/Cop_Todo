@@ -55,7 +55,7 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
             ),
           ),
-        const  SizedBox(height: 10),
+        const  SizedBox(height: 25),
        ListTile(
             onTap: () {
                Navigator.of(context).pop();
@@ -80,7 +80,7 @@ class _MainDrawerState extends State<MainDrawer> {
             ),
           ),
          const  SizedBox(height: 10),
-          ListTile(
+          /*ListTile(
               onTap: () {},
               leading: const Icon(
               Icons.settings,
@@ -95,7 +95,7 @@ class _MainDrawerState extends State<MainDrawer> {
                   fontSize: 20,
                 ),
               ),
-            ),
+            ), */
           
          const SizedBox(height: 40),
            ListTile(
@@ -128,7 +128,7 @@ class _MainDrawerState extends State<MainDrawer> {
           onTap: () {
           showAboutDialog(context: context,
           applicationIcon: const FlutterLogo(),
-          applicationLegalese: 'This is a task management app to help you stay organized and manage your day-to-day.',
+          applicationLegalese: 'This is a task management app to help you stay organized and manage your day-to-day todo task.',
           applicationName: 'Todo Note App'
            );
           },

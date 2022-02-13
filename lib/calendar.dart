@@ -25,7 +25,18 @@ class _CalendarState extends State<Calendar> {
     ),
    centerTitle: true,
      ),
-     body:  SafeArea(
+     body:  Container(
+       decoration: BoxDecoration(
+         //image: AssetImage('assetName'),
+         gradient:
+        LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Colors.white, Colors.grey.shade200]
+          ),
+        ),
+     
+        child: SafeArea(
            child: TableCalendar(
             firstDay: DateTime.utc(2020,02,03),
             lastDay: DateTime.utc(2040,02,03),
@@ -49,6 +60,7 @@ class _CalendarState extends State<Calendar> {
           ),
         ),
       ),
+     ),
     );
   }
 }

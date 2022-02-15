@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.login_todo">
    <application
-        android:label="login_todo"
+        android:label="Cop Todo"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

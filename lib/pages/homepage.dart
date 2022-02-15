@@ -116,7 +116,8 @@ class _HomePageState extends State<HomePage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
-                  physics: const ClampingScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  //physics: const ClampingScrollPhysics(),
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (BuildContext context, index) {
                     Random random = Random();

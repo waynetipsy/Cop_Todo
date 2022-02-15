@@ -35,11 +35,14 @@ class _LoginPageState extends State<LoginPage> {
           end: Alignment.bottomCenter,
           colors: [Colors.grey.shade600, Colors.white]
           ),
-          ),
+        ),
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
           children: [
-           Image.asset('assets/todorap.png'),
+           Image.asset('assets/todoappicon.png',
+           height: 300,
+           width: 300,
+           ),
        
         Align(
          alignment: Alignment.center,

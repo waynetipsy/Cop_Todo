@@ -38,9 +38,9 @@ class _OnboardingState extends State<Onboarding>  {
           child: PageView(
             controller: _pageController,
             children: [
-           onBoardPage('todonowpreview','Daily Todos?'),
-           onBoardPage('listdo', 'Here is a Todo App'),
-           onBoardPage('animation', 'Your Todo Reminder')
+           onBoardPage('listdo','Daily Todos?'),
+           onBoardPage('todonowpreview', 'Here is a Todo App'),
+           onBoardPage('todoappicon', 'Your Todo Reminder')
                 ],
         onPageChanged: (value) => (setCurrentPage(value)),
                ),

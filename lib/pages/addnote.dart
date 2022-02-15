@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,6 +15,7 @@ class AddNote extends StatefulWidget {
 class _AddNoteState extends State<AddNote> {
   late String title;
   late String description;
+  final formkey = GlobalKey<FormState>();
 
   
 
@@ -40,11 +40,22 @@ class _AddNoteState extends State<AddNote> {
                    ),   
                   ),
              const  SizedBox(height: 20),
-               TextField(
+               TextFormField(
+                 key: formkey,
                  maxLines: 1,
+                 validator: (title) {
+                   if (title!.isEmpty) {
+                     return 'Title is required';
+                   } else {
+                     return null;
+                   }
+
+                 },
                  onChanged: (_value) {
                    title = _value;
+              
                  },
+                 
                 decoration: InputDecoration(
                   fillColor: Colors.green,
                  focusedBorder: const UnderlineInputBorder(
@@ -59,11 +70,19 @@ class _AddNoteState extends State<AddNote> {
                    ),
                   
                 ),
-              ),
+               ),
+                
              const  SizedBox(height: 20.0),
-                TextField(
+                TextFormField(
                  maxLines: 3,
-                 
+                 validator: (description) {
+                   if (description!.isEmpty) {
+                     return 'Description is required';
+                   
+                   } else {
+                     return null;
+                   }
+                 },
                  onChanged: (_value) {
                    description = _value;
                  },
@@ -140,4 +159,4 @@ class _AddNoteState extends State<AddNote> {
     ),
    );
   }
- }
+  }

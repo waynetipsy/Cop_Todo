@@ -19,10 +19,20 @@ class _ViewNoteState extends State<ViewNote> {
   late String title;
   late String description;
 
+  bool edit = false;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+
+   floatingActionButton: edit ?  FloatingActionButton(onPressed: () {},
+   child: Icon(Icons.save_rounded,
+    color: Colors.black,
+   ),
+   
+   ) : null,
+
         backgroundColor: Colors.black,
         body: SingleChildScrollView(
           child: Container(
@@ -52,6 +62,29 @@ class _ViewNoteState extends State<ViewNote> {
                         ),
                       ),
                     ),
+
+                   ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          edit = !edit;
+                        });
+                      },
+                      child: const Icon(
+                        Icons.edit,
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          Colors.grey,
+                        ),
+                        padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                            horizontal: 20.0,
+                            vertical: 8.0,
+                          ),
+                        ),
+                      ),
+                    ),
+
                     ElevatedButton(
                       onPressed: delete,
                       child: const Icon(

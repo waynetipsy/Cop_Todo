@@ -79,23 +79,6 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
             ),
           ),
-         const  SizedBox(height: 10),
-          /*ListTile(
-              onTap: () {},
-              leading: const Icon(
-              Icons.settings,
-                size: 25,
-                color: Colors.green,
-            ),
-              title: const Text(
-                'Settings',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            ), */
           
          const SizedBox(height: 40),
            ListTile(

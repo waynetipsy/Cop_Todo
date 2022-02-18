@@ -8,9 +8,6 @@ import '../maindrawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../viewnote.dart';
 import 'package:intl/intl.dart';
-import '../custom_page_route.dart';
-
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -19,10 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-   final tabs = [
-     Container(),
-     Container(),
-   ];
 
   int selectedIndex = 0;
 
@@ -32,13 +25,13 @@ class _HomePageState extends State<HomePage> {
       .collection('todos');
 
   List<Color> myColors = [
-    Colors.yellowAccent.shade100,
+    
     Colors.red.shade100,
-    Colors.blue.shade100,
+  
     Colors.deepPurple.shade100,
-    Colors.green.shade100,
+    
     Colors.white,
-    Colors.orange.shade100,
+    
   ];
 
   @override
@@ -56,26 +49,6 @@ class _HomePageState extends State<HomePage> {
         ),
         elevation: 0.0,
         centerTitle: true,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
-        unselectedItemColor: Colors.white,
-        selectedItemColor: Colors.green,
-        currentIndex: selectedIndex,
-        onTap: (index) => setState(() {
-           selectedIndex = index;
-        }),
-
-         items: const[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.fact_check_outlined),
-            label: 'Todos'
-          ),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.done, size: 28,),
-            label: 'Completed'
-          ),
-        ],
       ),
 
       drawer: Drawer(
@@ -121,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (BuildContext context, index) {
                     Random random = Random();
-                    Color bg = myColors[random.nextInt(7)];
+                    Color bg = myColors[random.nextInt(3)];
                     Map data = snapshot.data!.docs[index].data() as Map;
                     DateTime mydateTime = data['created'].toDate();
                     String formattedTime =
@@ -130,8 +103,8 @@ class _HomePageState extends State<HomePage> {
                       onTap: () {
                         Navigator.of(context)
                             .push(
-                          CustomPageRoute(
-                            child: ViewNote(
+                          MaterialPageRoute(
+                            builder: (context) => ViewNote(
                               data,
                               formattedTime,
                               snapshot.data!.docs[index].reference,

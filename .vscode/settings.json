@@ -1,8 +1,21 @@
 {
     "cSpell.words": [
+        "addnote",
         "firestore",
+        "isloading",
+        "kindacode",
+        "lato",
+        "listdo",
+        "LTRB",
+        "maindrawer",
+        "mydate",
+        "onboardingscreen",
+        "prefs",
         "Schyler",
+        "Signin",
         "sqflite",
-        "todoappicon"
+        "todoappicon",
+        "todos",
+        "viewnote"
     ]
 }

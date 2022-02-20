@@ -15,8 +15,7 @@ class AddNote extends StatefulWidget {
 class _AddNoteState extends State<AddNote> {
   late String title;
   late String description;
-  final formkey = GlobalKey<FormState>();
-
+   GlobalKey<FormState> Key = GlobalKey<FormState>();
   
 
   @override
@@ -40,8 +39,10 @@ class _AddNoteState extends State<AddNote> {
                    ),   
                   ),
              const  SizedBox(height: 20),
+              Form(
+                key: Key,
+                child: 
                TextFormField(
-                 key: formkey,
                  maxLines: 1,
                  validator: (title) {
                    if (title!.isEmpty) {
@@ -71,15 +72,14 @@ class _AddNoteState extends State<AddNote> {
                   
                 ),
                ),
-                
+              ), 
              const  SizedBox(height: 20.0),
                 TextFormField(
                  maxLines: 3,
                  validator: (description) {
                    if (description!.isEmpty) {
                      return 'Description is required';
-                   
-                   } else {
+                     } else {
                      return null;
                    }
                  },
@@ -100,6 +100,7 @@ class _AddNoteState extends State<AddNote> {
                   
                 ),
               ),
+              
              const SizedBox(height: 25),
              Padding(
                padding: const EdgeInsets.all(15),

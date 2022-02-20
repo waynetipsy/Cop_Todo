@@ -13,6 +13,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+    late bool _isloading;
+
   Future<bool> _checkInternetConnection() async {
     late bool connectStatus;
     try {
@@ -24,6 +26,18 @@ class _LoginPageState extends State<LoginPage> {
       connectStatus = false;
     }
     return connectStatus;
+  }
+
+
+  @override
+  void initState() {
+  _isloading = true;
+  Future.delayed(Duration(seconds: 3),() {
+       setState(() {
+         _isloading = false;
+       });
+  });
+    super.initState();
   }
 
   @override
@@ -93,20 +107,7 @@ class _LoginPageState extends State<LoginPage> {
              final _internetConnection = await _checkInternetConnection();
               if (_internetConnection) {
                  await signInWithGoogle(context);
-              Column(
-             children: const [
-                Center(
-                 child: CircularProgressIndicator(
-                      value: 0.5,
-                      strokeWidth: 8,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                      backgroundColor: Colors.black,
-                      ),
-                     ),
-                     SizedBox(height: 20),
-                     Text('Loading...'),
-             ],
-           );
+              
            SharedPreferences.getInstance().then((pref) => {
              pref.setBool('Signin', true)
            });

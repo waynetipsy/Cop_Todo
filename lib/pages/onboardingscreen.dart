@@ -91,15 +91,7 @@ class _OnboardingState extends State<Onboarding>  {
            ) ,),   
           ),
           ),
-       const SizedBox(height: 10,
-       ),
-       Text('Add your experience', 
-      style: GoogleFonts.lato(
-         color:  Colors.white,
-         fontSize: 18,
-         fontWeight: FontWeight.bold,
-                 ),
-               ),
+       
               ],
              ),
            ),

@@ -110,7 +110,6 @@ class _MainDrawerState extends State<MainDrawer> {
         ListTile(
           onTap: () {
           showAboutDialog(context: context,
-          applicationIcon: const FlutterLogo(),
           applicationLegalese: 'This is a task management app to help you stay organized and manage your day-to-day todo task.',
           applicationName: 'Todo Note App'
            );

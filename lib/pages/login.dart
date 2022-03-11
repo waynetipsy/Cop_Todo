@@ -13,7 +13,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-    late bool _isloading;
+  
 
   Future<bool> _checkInternetConnection() async {
     late bool connectStatus;
@@ -26,18 +26,6 @@ class _LoginPageState extends State<LoginPage> {
       connectStatus = false;
     }
     return connectStatus;
-  }
-
-
-  @override
-  void initState() {
-  _isloading = true;
-  Future.delayed(Duration(seconds: 3),() {
-       setState(() {
-         _isloading = false;
-       });
-  });
-    super.initState();
   }
 
   @override

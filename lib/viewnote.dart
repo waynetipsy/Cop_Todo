@@ -1,6 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class ViewNote extends StatefulWidget {
@@ -16,6 +20,7 @@ class ViewNote extends StatefulWidget {
 }
 
 class _ViewNoteState extends State<ViewNote> {
+  
   late String title;
   late String description;
 
@@ -69,7 +74,7 @@ class _ViewNoteState extends State<ViewNote> {
    ),
    backgroundColor: Colors.green,
    ) : null,
-
+    resizeToAvoidBottomInset: false,
         backgroundColor: Colors.black,
         body: SingleChildScrollView(
           child: Container(
@@ -89,7 +94,7 @@ class _ViewNoteState extends State<ViewNote> {
                       ),
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
-                          Colors.grey.shade800
+                          Colors.black,
                         ),
                         padding: MaterialStateProperty.all(
                           const EdgeInsets.symmetric(
@@ -113,8 +118,8 @@ class _ViewNoteState extends State<ViewNote> {
                         ),
                         padding: MaterialStateProperty.all(
                           const EdgeInsets.symmetric(
-                            horizontal: 20.0,
-                            vertical: 8.0,
+                            horizontal: 10.0,
+                            vertical: 5.0,
                           ),
                         ),
                       ),
@@ -131,7 +136,10 @@ class _ViewNoteState extends State<ViewNote> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextFormField(
-                        decoration: InputDecoration.collapsed(hintText: 'Title'),
+    
+                        decoration: InputDecoration.collapsed(
+                          hintText: 'Title',
+                          ),
                         style: GoogleFonts.lato(
                           fontSize: 30.0,
                           fontWeight: FontWeight.bold,
@@ -164,7 +172,8 @@ class _ViewNoteState extends State<ViewNote> {
                             ),
                           ),
                        ),
-                               TextFormField(decoration: InputDecoration(
+                  TextFormField(
+                   decoration: InputDecoration(
                    hintText: 'Description',
                    ),
                    style: GoogleFonts.lato(
@@ -176,7 +185,7 @@ class _ViewNoteState extends State<ViewNote> {
                   onChanged: (_val) {
                     description = _val;
                   },
-                  maxLines: 17,
+                  maxLines: 16,
                   validator: (_val) {
                           if(_val!.isEmpty) {
                             return "Can't be empty";
@@ -196,46 +205,50 @@ class _ViewNoteState extends State<ViewNote> {
                  child: MaterialButton(
                   padding: const EdgeInsets.fromLTRB(
                     35.0, 13.0, 35.0, 13.0),
-                    child: Text('Edit',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.lato(
-                            fontSize: 20,
-                            color: Colors.green,
-                            fontWeight: FontWeight.bold,
+                    child: 
+                 Text('Edit',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.lato(
+                              fontSize: 20,
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
+                  
                    onPressed: () {
                      setState(() {
                                 edit = !edit;
-                       });
-                     },
-                   ),
+                           });
+                          },
+                         ),
+                       ),
+                      ),
+                     ),   
+                   ]
                  ),
-               ),
-                          ),
-                    ]
-            ),
-            )
-           ]
-          
-         )
-      ),
-            )
+                )
+               ]
+             )
+           ),
+          )
           )
         );
   }
   void delete() async {
      await widget.ref.delete();
-     Navigator.pop(context);
 
-  ScaffoldMessenger.of(context)
-  .showSnackBar( const SnackBar(
-    content:  Text('Todo has been Deleted!'),
-    duration: Duration(seconds: 3)
-    ),
-   );
-    Navigator.pop(context);
+    Fluttertoast.showToast(
+     msg: 'Todo has been deleted',
+     fontSize: 18,
+     gravity: ToastGravity.BOTTOM,
+     backgroundColor: Colors.grey.shade300,
+     textColor: Colors.white,
+  );  
+     Navigator.pop(context);
+  
   }
+
+
   void save()async {
   if (Key.currentState!.validate()) {
     await widget.ref.update(
@@ -243,6 +256,22 @@ class _ViewNoteState extends State<ViewNote> {
       );
       Navigator.pop(context);
 
-  } 
+    Fluttertoast.showToast(
+     msg: 'Todo has been edited',
+     fontSize: 18,
+     gravity: ToastGravity.BOTTOM,
+     backgroundColor: Colors.grey.shade300,
+     textColor: Colors.white,
+     );
+   }
+       final prefs = await SharedPreferences.getInstance();
+   final userData = json.encode(
+     {
+      'title': title,
+      'description': description,
+      'created': DateTime.now(),
+   }
+   );
+   prefs.setString('userData', userData);
   }
 }

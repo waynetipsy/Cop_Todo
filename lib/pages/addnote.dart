@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 
 class AddNote extends StatefulWidget {
   const AddNote({Key? key}) : super(key: key);
@@ -16,6 +18,8 @@ class _AddNoteState extends State<AddNote> {
   late String title;
   late String description;
    GlobalKey<FormState> Key = GlobalKey<FormState>();
+   TextEditingController _title = TextEditingController();
+   TextEditingController _description = TextEditingController();
   
 
   @override
@@ -43,6 +47,8 @@ class _AddNoteState extends State<AddNote> {
                 key: Key,
                 child: 
                TextFormField(
+              
+              controller: _title,
                  maxLines: 1,
                  validator: (title) {
                    if (title!.isEmpty) {
@@ -75,6 +81,8 @@ class _AddNoteState extends State<AddNote> {
               ), 
              const  SizedBox(height: 20.0),
                 TextFormField(
+                  
+                controller: _description,
                  maxLines: 3,
                  validator: (description) {
                    if (description!.isEmpty) {
@@ -130,6 +138,7 @@ class _AddNoteState extends State<AddNote> {
   }
 
   void add() async {
+
     CollectionReference ref = FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -141,9 +150,17 @@ class _AddNoteState extends State<AddNote> {
       'created': DateTime.now(),
     };
     ref.add(data);
+
+   Fluttertoast.showToast(
+     msg: 'Todo has been created',
+     fontSize: 18,
+     gravity: ToastGravity.BOTTOM,
+     backgroundColor: Colors.grey.shade300,
+     textColor: Colors.white,
+  );
     Navigator.pop(context);
 
-   final prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
    final userData = json.encode(
      {
       'title': title,
@@ -151,13 +168,7 @@ class _AddNoteState extends State<AddNote> {
       'created': DateTime.now(),
    }
    );
-   prefs.setString('userData', userData);
-    
-   ScaffoldMessenger.of(context).showSnackBar( 
-     const SnackBar(
-    content:  Text('Todo added!'),
-    duration: Duration(seconds: 3)
-    ),
-   );
+   prefs.setString('userData', userData);   
+   
   }
   }

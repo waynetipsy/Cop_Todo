@@ -1,8 +1,10 @@
-import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'addnote.dart';
+import 'package:sqflite/sqflite.dart';
+import '../models/todo_model.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../screen/database/database.dart';
 import '../pages/addnote.dart';
 import '../maindrawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,16 +13,32 @@ import 'package:intl/intl.dart';
 
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
+    
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+
+  late Future<List<Todo>> _todoList;
+
+  final DateFormat _dateFormatter = DateFormat('MMM dd, yyyy');
+
+  DatabaseHelper _databaseHelper = DatabaseHelper.instance;
+  
+    @override
+   void initState() {
+     super.initState();
+     _updateTodoList();
+   }
+
+  _updateTodoList() {
+     _todoList =  DatabaseHelper.instance.getTodoList();
+  }
+
   bool selected = false;
   int selectedIndex = 0;
-  late bool _isloading;
+  //late bool _isloading;
 
   CollectionReference ref = FirebaseFirestore.instance
       .collection('users')
@@ -29,16 +47,53 @@ class _HomePageState extends State<HomePage> {
 
   List<Color> myColors = [Colors.white];
 
-  @override
-  void initState() {
-    _isloading = true;
-    Future.delayed(Duration(seconds: 5), () {
-      setState(() {
-        _isloading = false;
-      });
-    });
-    super.initState();
+  Widget _buildNote(Todo todo) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 25.0),
+     child: Column(
+       children: [
+         ListTile(
+           title: Text(todo.title!, style: TextStyle(
+             fontSize: 18.0,
+             color: Colors.white,
+             decoration: todo.status == 0
+             ? TextDecoration.none
+             : TextDecoration.lineThrough
+            ),
+           ),
+           subtitle: Text('${_dateFormatter.format(todo.date!)} - ${todo.priority}', 
+           style: TextStyle(
+             fontSize: 15.0,
+             color: Colors.white,
+               decoration: todo.status == 0
+             ? TextDecoration.none
+             : TextDecoration.lineThrough
+           ),
+           ),
+           trailing: Checkbox(
+             value: todo.status == 1 ? true : false,
+             onChanged: (value) {
+               todo.status = value! ? 1 : 0;
+               DatabaseHelper.instance.updateTodo(todo);
+               _updateTodoList();
+           Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomePage()));
+             },
+          activeColor: Colors.green,
+           ),
+           onTap: () => Navigator.push(
+             context, MaterialPageRoute(
+               builder: (_) => AddNote(
+              
+               ),
+               ),
+              ),
+         ),
+         Divider(height: 5.0, color: Colors.black, thickness: 2.0,)
+       ],
+     ),
+    );
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -65,156 +120,72 @@ class _HomePageState extends State<HomePage> {
         floatingActionButton: FloatingActionButton(
           elevation: 5,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           onPressed: () {
-            showDialog(
-              barrierDismissible: false,
-              context: context,
-              builder: (context) => const AddNote(),
-            ).then((value) {
-              setState(() {});
-            });
+          Navigator.push(context, MaterialPageRoute(
+            builder: (_) => AddNote(
+              updateTodoList: _updateTodoList(),
+            ),));
           },
           child: const Icon(
-            FontAwesomeIcons.plus,
+            Icons.add,
             color: Colors.black,
           ),
           backgroundColor: Colors.green,
         ),
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.grey.shade800, Colors.white]),
-          ),
-          child: FutureBuilder<QuerySnapshot>(
-              future: ref.orderBy('created').get(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data!.docs.length == 0) {
-                    return Center(
-                      child: Text(
-                        'You have no saved Todo!',
-                        style: GoogleFonts.lato(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                    );
-                  }
+        body: FutureBuilder(
+        future: _todoList,
+        builder: (context, AsyncSnapshot snapshot) {
+          if(!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.green,
+                strokeWidth: 8.0,
+              ),
+            );
+          }
 
-                  return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      physics: const ClampingScrollPhysics(),
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (BuildContext context, index) {
-                        Random random = Random();
-                        Color bg = myColors[random.nextInt(1)];
-                        Map data = snapshot.data!.docs[index].data() as Map;
-                        DateTime mydateTime = data['created'].toDate();
-                        String formattedTime =
-                            DateFormat.yMMMd().add_jm().format(mydateTime);
-                          return InkWell(
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(
-                              MaterialPageRoute(
-                                builder: (context) => ViewNote(
-                                  data,
-                                  formattedTime,
-                                  snapshot.data!.docs[index].reference,
-                                ),
-                              ),
-                            ).then((value) {
-                              setState(() {});
-                            });
-                          },
-                          child: Card(
-                            color: bg,
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Row( 
-                                children: [
-                                  Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                  child: Checkbox(
-                                        value: this.selected,
-                                        activeColor: Colors.green,
-                                        checkColor: Colors.black,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            this.selected = this.selected;
-                                          });
-                                        }),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 5.0, horizontal: 10.0),
-                                          child: Text(
-                                            '${data['title']}',
-                                            style: GoogleFonts.lato(
-                                              fontSize: 27.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-                                              decoration: this.selected
-                                                  ? TextDecoration.lineThrough : null,
-                                                
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 5),
-                                                 Container(
-                                                 alignment: Alignment.centerRight,
-                                                   child: Text(
-                                                      formattedTime,
-                                                      style: GoogleFonts.lato(
-                                                        fontSize: 11.0,
-                                                        fontWeight: FontWeight.bold,
-                                                        color: Colors.green,
-                                                  decoration: this.selected ?
-                                                  TextDecoration.lineThrough : null,
-                                          ),
-                                        ),
-                                                 ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      }
-                  );
-                } else {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _isloading
-                          ? Center(
-                              child: CircularProgressIndicator(
-                                value: 0.6,
-                                backgroundColor: Colors.green,
-                                valueColor:
-                                    AlwaysStoppedAnimation<Color>(Colors.black),
-                                strokeWidth: 8,
-                              ),
-                            )
-                          : SizedBox(height: 30),
-                      Text('Loading...')
-                    ],
-                  );
+         final int completeTodoCount = snapshot.data!.where((Todo todo) => todo.status == 1).toList().length;
+
+          return  ListView.builder(
+           padding: EdgeInsets.symmetric(vertical: 80.0),
+           itemCount: int.parse(snapshot.data.length.toString()) + 1,
+          itemBuilder: (BuildContext context, int index){
+         if(index == 0) {
+           return Padding(
+             padding: EdgeInsets.symmetric(
+               horizontal: 40.0,
+               vertical: 20.0
+              ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('My Tasks',
+              style: TextStyle(
+                color: Colors.black,
+               fontSize: 40,
+               fontWeight: FontWeight.bold, 
+              ),
+              
+              ),
+              SizedBox(height: 30.0),
+              Text( '$completeTodoCount of ${snapshot.data.length}',
+              style: TextStyle(
+                color: Colors.black,
+               fontSize: 20.0,
+               fontWeight: FontWeight.w600  , 
+                 ),
+                ),
+               ],
+              ),
+             );
+           }
+           return _buildNote(snapshot.data[index - 1]);
                 }
-              }
-            ),
-         ),
-       );
-     }
-   }
+              );
+             }
+             ),
+            );
+         }
+      }
+           

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,6 +20,11 @@ class ViewNote extends StatefulWidget {
 }
 
 class _ViewNoteState extends State<ViewNote> {
+
+  late  SharedPreferences prefs;
+Future () async {
+ prefs = await SharedPreferences.getInstance();
+}
   
   late String title;
   late String description;
@@ -236,7 +241,7 @@ class _ViewNoteState extends State<ViewNote> {
   }
   void delete() async {
      await widget.ref.delete();
-
+   Navigator.pop(context);
     Fluttertoast.showToast(
      msg: 'Todo has been deleted',
      fontSize: 18,

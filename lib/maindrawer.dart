@@ -37,7 +37,7 @@ class _MainDrawerState extends State<MainDrawer> {
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context).push(CustomPageRoute(
-                  child : const HomePage(),
+                  child : HomePage(),
                   ),
               );
             },
@@ -56,31 +56,7 @@ class _MainDrawerState extends State<MainDrawer> {
             ),
           ),
         const  SizedBox(height: 25),
-       ListTile(
-            onTap: () {
-               Navigator.of(context).pop();
-              Navigator.of(context).push(
-                CustomPageRoute(
-                  child : const Calendar(),
-                  ),
-              );
-            },
-            leading: const Icon(
-              FontAwesomeIcons.calendar,
-              size: 25,
-              color: Colors.green,
-            ),
-            title: const Text(
-              'Calender',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          
-         const SizedBox(height: 40),
+       
            ListTile(
             onTap: () {
            showDialog(

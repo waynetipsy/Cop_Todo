@@ -49,7 +49,7 @@ Future signInWithGoogle (BuildContext context) async {
 
   Navigator.of(context).pushReplacement(
      MaterialPageRoute(
-    builder: (context) => const HomePage()),
+    builder: (context) => HomePage()),
     );
     
 
@@ -57,7 +57,7 @@ Future signInWithGoogle (BuildContext context) async {
   users.doc(user.uid).set(userData);
 Navigator.of(context).pushReplacement(
      MaterialPageRoute(
-    builder: (context) => const HomePage()),
+    builder: (context) =>  HomePage()),
         );
        }
       }

@@ -23,7 +23,7 @@ import 'package:login_todo/pages/onboardingscreen.dart';
         }else if (snapShot.hasError) {
           return const Center(child: Text('Something went wrong'),);
         }else if (snapShot.hasData) {
-          return const HomePage();
+          return  HomePage();
         }else {
           return const Onboarding();
         }

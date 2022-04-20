@@ -1,14 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'addnote.dart';
-import 'package:sqflite/sqflite.dart';
 import '../models/todo_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../screen/database/database.dart';
 import '../pages/addnote.dart';
 import '../maindrawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../viewnote.dart';
 import 'package:intl/intl.dart';
 
 
@@ -54,8 +52,8 @@ class _HomePageState extends State<HomePage> {
        children: [
          ListTile(
            title: Text(todo.title!, style: TextStyle(
-             fontSize: 18.0,
-             color: Colors.white,
+             fontSize: 28.0,
+             color: Colors.black,
              decoration: todo.status == 0
              ? TextDecoration.none
              : TextDecoration.lineThrough
@@ -63,8 +61,8 @@ class _HomePageState extends State<HomePage> {
            ),
            subtitle: Text('${_dateFormatter.format(todo.date!)} - ${todo.priority}', 
            style: TextStyle(
-             fontSize: 15.0,
-             color: Colors.white,
+             fontSize: 12.0,
+             color: Colors.green,
                decoration: todo.status == 0
              ? TextDecoration.none
              : TextDecoration.lineThrough
@@ -76,19 +74,20 @@ class _HomePageState extends State<HomePage> {
                todo.status = value! ? 1 : 0;
                DatabaseHelper.instance.updateTodo(todo);
                _updateTodoList();
-           Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomePage()));
+           Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomePage())
+              );
              },
           activeColor: Colors.green,
            ),
-           onTap: () => Navigator.push(
-             context, MaterialPageRoute(
+           onTap: () => Navigator.push(context, MaterialPageRoute(
                builder: (_) => AddNote(
-              
+              updateTodoList: _updateTodoList(),
+              todo: todo,
+                 ),
                ),
-               ),
-              ),
-         ),
-         Divider(height: 5.0, color: Colors.black, thickness: 2.0,)
+             ),
+          ),
+         Divider(height: 5.0, color: Colors.black, thickness: 2.0),
        ],
      ),
     );
@@ -135,7 +134,7 @@ class _HomePageState extends State<HomePage> {
         ),
         body: FutureBuilder(
         future: _todoList,
-        builder: (context, AsyncSnapshot snapshot) {
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
           if(!snapshot.hasData) {
             return Center(
               child: CircularProgressIndicator(
@@ -143,13 +142,14 @@ class _HomePageState extends State<HomePage> {
                 strokeWidth: 8.0,
               ),
             );
-          }
+          }  
 
          final int completeTodoCount = snapshot.data!.where((Todo todo) => todo.status == 1).toList().length;
 
           return  ListView.builder(
            padding: EdgeInsets.symmetric(vertical: 80.0),
-           itemCount: int.parse(snapshot.data.length.toString()) + 1,
+           
+         itemCount: int.parse(snapshot.data.length.toString()) + 1,
           itemBuilder: (BuildContext context, int index){
          if(index == 0) {
            return Padding(
@@ -163,7 +163,7 @@ class _HomePageState extends State<HomePage> {
               Text('My Tasks',
               style: TextStyle(
                 color: Colors.black,
-               fontSize: 40,
+               fontSize: 36,
                fontWeight: FontWeight.bold, 
               ),
               

@@ -23,26 +23,31 @@ class AddNote extends StatefulWidget {
 class _AddNoteState extends State<AddNote> {
 
   String _title  = '';
-  late String description;
+  String _priority = 'Low';
+  // late String description;
+  //int _status = 0;
   String btnText = 'Add Note';
   String titleText = 'Add Note';
-   String? priority;
   DateTime _date = DateTime.now();
+
   final _formKey = GlobalKey<FormState>();
      
-   TextEditingController _dateController = TextEditingController();
+  TextEditingController _dateController = TextEditingController();
 
-   final DateFormat _dateFormatter = DateFormat('MMM dd, yyyy');
-    List<String> priorities = ['Low ', 'Medium', 'High'];
+ final DateFormat _dateFormatter = DateFormat('MMM dd, yyyy');
+ final List<String> _priorities = ['Low', 'Medium', 'High'];
+
+  get status => null;
+  get id => null;
       
       @override
-   void initState() {
+    void initState() {
      super.initState();
 
      if(widget.todo != null) {
       _title = widget.todo!.title!;
       _date = widget.todo!.date!;
-      priority = widget.todo!.priority!;
+      _priority = widget.todo!.priority!;
 
       setState(() {
         btnText = 'Update Todo';
@@ -105,13 +110,15 @@ class _AddNoteState extends State<AddNote> {
    _submit() {
    if(_formKey.currentState!.validate()) {
      _formKey.currentState!.save();
-     print('$_title, $priority, $_date');
+     print('$_title, $_priority, $_date');
 
-     Todo todo = Todo(
-       title: _title, 
+      Todo todo = Todo (
+        //id: id,
+         title: _title, 
        date: _date,
-       priority: priority,
-       );
+       priority: _priority,
+    
+       );  
 
        if(widget.todo == null) {
         todo.status = 0;
@@ -134,7 +141,7 @@ class _AddNoteState extends State<AddNote> {
             ),
            );
          }
-         widget.updateTodoList!();
+         //widget.updateTodoList!();
     }
    }
 
@@ -142,7 +149,9 @@ class _AddNoteState extends State<AddNote> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: GestureDetector(
+        
         onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(
           child: Container(
@@ -156,14 +165,15 @@ class _AddNoteState extends State<AddNote> {
                   onTap: () => Navigator.pushReplacement(
                     context, MaterialPageRoute(builder: (_) => HomePage(),)),
                     child: Icon(Icons.arrow_back_ios,
+                    
                     size: 30.0,
-                  color: Colors.black,
+                  color: Colors.white,
                     ),
                   ),
                 SizedBox(height: 50.0),
                 Text(titleText,
                 style: TextStyle(
-                color: Colors.black,
+                color: Colors.green,
                 fontSize: 35,
                 fontWeight: FontWeight.bold,
                  ),
@@ -177,29 +187,35 @@ class _AddNoteState extends State<AddNote> {
                       child: TextFormField(
                         style: TextStyle(fontSize: 18.0),
                         decoration: InputDecoration(
-                          
+                          prefixIcon: Icon(Icons.title_outlined,
+                          ),
                           labelText: 'Title',
                           labelStyle: TextStyle(
+                            color: Colors.black,
                             fontSize: 18.0 ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0),
-                            )
+                            ),
                           ),
                           validator: (input) => 
-                        input!.trim().isEmpty ? 'please enter a todo title' : null,
+                        input!.trim().isEmpty ? 'Please enter title': null,
                         onSaved: (input) => _title = input!,
                        initialValue: _title,
                         ),
                       ),
                       Padding(padding: EdgeInsets.symmetric(vertical: 20.0),
                          child: TextFormField(
+                           
                            readOnly: true,
                            controller: _dateController,
                         style: TextStyle(fontSize: 18.0),
                         onTap: _handleDataPicker,
                         decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.date_range_outlined),
+                        //prefixIconColor: Colors.green,
                           labelText: 'Date',
                           labelStyle: TextStyle(
+                            color: Colors.black,
                             fontSize: 18.0 ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -214,7 +230,8 @@ class _AddNoteState extends State<AddNote> {
                         icon: Icon(Icons.arrow_drop_down_circle),
                          iconSize: 22.0,
                          iconEnabledColor: Colors.green,
-                        items: priorities.map((String priority) {
+                         //value: _priority,
+                        items: _priorities.map((String priority) {
                         
                           return DropdownMenuItem(
                             value: priority,
@@ -222,6 +239,7 @@ class _AddNoteState extends State<AddNote> {
                               priority,
                               style: TextStyle(
                                 color: Colors.black,
+                                fontWeight: FontWeight.bold,
                                 fontSize: 18.0,
                               ),
                             ),
@@ -229,22 +247,27 @@ class _AddNoteState extends State<AddNote> {
                         }).toList(),
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
-                        labelText: 'priorities',
-                      labelStyle: TextStyle(fontSize: 18.0),
+                        labelText: 'priority',
+                      labelStyle: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.black,
+                      ),
                         border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0)
                         ),
                       ),
-                     validator: (input) => priority == null ? 'Please select a priority level' : null, 
+                     validator: (input) => _priority == null ? 'Please select a priority level' : null, 
+                    //validator: (value) => value == null ? 'Please select a priority level' : null,    
                       onChanged: (value) {
                           setState(() {
-                            priority = value.toString();
-                            print(priority);
+                            _priority = value.toString();
+                          
                           });
                          },
-                      value: priority,
+                      value: _priority,
                       ),
                     ),
+                    SizedBox(height: 20),
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 20.0),
                    height: 60.0,  
@@ -309,7 +332,7 @@ class _AddNoteState extends State<AddNote> {
 
       var data = {
        'title': _title,
-       'description': description,
+       //'description': description,
        'created': DateTime.now(),
     };
     ref.add(data);
@@ -324,3 +347,4 @@ class _AddNoteState extends State<AddNote> {
     Navigator.pop(context);
    }
   }
+

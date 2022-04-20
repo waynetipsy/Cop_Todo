@@ -5,7 +5,7 @@ import 'dart:io';
 
 class DatabaseHelper{
   static final DatabaseHelper instance = DatabaseHelper._instance();
-  static Database? _db = null;
+  static Database? _db;
 
   DatabaseHelper._instance();
 
@@ -16,6 +16,12 @@ class DatabaseHelper{
   String colStatus = 'status';
   String colTitle = 'title';
   String todoTable = 'todo';
+
+   // Todo Tables
+  // Id | Title | Date | Priority | Status
+  // 0     ''      ''      ''         0
+  // 2     ''      ''      ''         0
+  // 3     ''      ''      ''         0
 
 
   Future<Database?> get db async {
@@ -37,8 +43,8 @@ class DatabaseHelper{
 
  void _createDb(Database db, int version) async{
    await db.execute(
-   'CREATE TABLE $todoTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colTitle TEXT, $colDate Text, $colPriority TEXT, $colStatus INTEGER)'
-   );
+   'CREATE TABLE $todoTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colTitle TEXT, $colDate Text, $colPriority TEXT, $colStatus INTEGER)');
+   
   }
 
   Future<List<Map<String, dynamic>>> getTodoMapList() async {
@@ -69,7 +75,7 @@ class DatabaseHelper{
      );
      return result;
    }
-   Future<int> updateTodo(Todo todo) async {
+   Future<int> updateTodo(Todo todo) async { 
       Database? db = await this.db;
       final int result = await db!.update(
         todoTable,

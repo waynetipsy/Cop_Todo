@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import './custom_page_route.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:login_todo/calendar.dart';
 import 'package:login_todo/logout.dart';
 import './pages/homepage.dart';
 
@@ -86,7 +85,7 @@ class _MainDrawerState extends State<MainDrawer> {
         ListTile(
           onTap: () {
           showAboutDialog(context: context,
-          applicationLegalese: 'This is a task management app to help you stay organized and manage your day-to-day todo task.',
+          applicationLegalese: 'This is a task management app to help you stay organized and manage your day-to-day todo task.Built with Sqlite and Firebase',
           applicationName: 'Todo Note App'
            );
           },

@@ -104,7 +104,16 @@ class _AddNoteState extends State<AddNote> {
        context, 
        MaterialPageRoute(builder: (_) => HomePage())
        );
+
+       Fluttertoast.showToast(
+     msg: 'Todo has been deleted',
+     fontSize: 18,
+     gravity: ToastGravity.BOTTOM,
+     backgroundColor: Colors.grey.shade300,
+     textColor: Colors.white,
+     );
        widget.updateTodoList!();
+     
    }
 
    _submit() {
@@ -143,6 +152,13 @@ class _AddNoteState extends State<AddNote> {
          }
          //widget.updateTodoList!();
     }
+    Fluttertoast.showToast(
+     msg: 'Todo has been created',
+     fontSize: 18,
+     gravity: ToastGravity.BOTTOM,
+     backgroundColor: Colors.grey.shade300,
+     textColor: Colors.white,
+     );
    }
 
    
@@ -150,7 +166,8 @@ class _AddNoteState extends State<AddNote> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: GestureDetector(
+      body:
+        GestureDetector(
         
         onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(
@@ -167,13 +184,13 @@ class _AddNoteState extends State<AddNote> {
                     child: Icon(Icons.arrow_back_ios,
                     
                     size: 30.0,
-                  color: Colors.white,
+                  color: Colors.black,
                     ),
                   ),
                 SizedBox(height: 50.0),
                 Text(titleText,
                 style: TextStyle(
-                color: Colors.green,
+                color: Colors.black,
                 fontSize: 35,
                 fontWeight: FontWeight.bold,
                  ),
@@ -256,8 +273,8 @@ class _AddNoteState extends State<AddNote> {
                       borderRadius: BorderRadius.circular(10.0)
                         ),
                       ),
-                     validator: (input) => _priority == null ? 'Please select a priority level' : null, 
-                    //validator: (value) => value == null ? 'Please select a priority level' : null,    
+                  validator: (input) => _priority == null ? 'Please select a priority level' : null,
+                    // validator: (value) => value == null ? 'Please select a priority level' : null,    
                       onChanged: (value) {
                           setState(() {
                             _priority = value.toString();
@@ -267,7 +284,7 @@ class _AddNoteState extends State<AddNote> {
                       value: _priority,
                       ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 10),
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 20.0),
                    height: 60.0,  
@@ -278,6 +295,9 @@ class _AddNoteState extends State<AddNote> {
                    ),
                   child: ElevatedButton(
                    style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0)
+                  ),
                      primary: Colors.green,
                    ),
                     onPressed: _submit,
@@ -299,6 +319,9 @@ class _AddNoteState extends State<AddNote> {
                 ),
                 child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0)
+                ),
                   primary: Colors.green,
                   ),
                   onPressed: _delete,
@@ -346,5 +369,4 @@ class _AddNoteState extends State<AddNote> {
      );
     Navigator.pop(context);
    }
-  }
-
+}

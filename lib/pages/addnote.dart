@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_todo/screen/database/database.dart';
@@ -185,10 +184,8 @@ class _AddNoteState extends State<AddNote> {
         
       
       body: SafeArea(
-          child: Form(
-                      key: _formKey,
-                      
-                        child: Column(
+          child: Form(key: _formKey,
+                      child: Column(
                           children: [
                             Padding(padding: EdgeInsets.all(16.0),
                             

@@ -164,18 +164,18 @@ class _HomePageState extends State<HomePage> {
                   .length;
        
               return ListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: 80.0),
+                  padding: EdgeInsets.symmetric(vertical: 15.0),
                   itemCount: int.parse(snapshot.data.length.toString()) + 1,
                   itemBuilder: (BuildContext context, int index) {
                     if (index == 0) {
                           return 
                            Column(
-                            crossAxisAlignment:CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment:CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                Container(
                                  margin: EdgeInsets.all(10),
-                                padding: EdgeInsets.all(4.0),
+                                padding: EdgeInsets.all(15.0),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20.0),
                                   color: Colors.black,
@@ -183,20 +183,15 @@ class _HomePageState extends State<HomePage> {
                                  child: Text(
                                       'Completed Todo  $completeTodoCount of ${snapshot.data.length} ',
                                       style: TextStyle(
-                                        color: Colors.green,
+                                        color: Colors.white,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 12.0,
+                                        fontSize: 15.0,
                                       ),
                                  ),
-                               
-                                
                                 ),
-                                
-                              
                               ],
-                            
                           );
-                    }
+                        }
                      
                     return  _buildNote(snapshot.data[index - 1]);
                   }

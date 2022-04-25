@@ -61,6 +61,7 @@ class _HomePageState extends State<HomePage> {
                         ? TextDecoration.none
                         : TextDecoration.lineThrough),
               ),
+              
               subtitle: Text(
                 '${_dateFormatter.format(todo.date!)} - ${todo.priority}',
                 style: TextStyle(
@@ -108,9 +109,9 @@ class _HomePageState extends State<HomePage> {
         title: Text(
           'Todos List',
           style: GoogleFonts.lato(
-            fontSize: 25.0,
+            fontSize: 22.0,
             fontWeight: FontWeight.bold,
-            color: Colors.green,
+            color: Colors.white,
           ),
         ),
         elevation: 5.0,
@@ -149,12 +150,12 @@ class _HomePageState extends State<HomePage> {
             future: _todoList,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (!snapshot.hasData) {
-                return Center(
+                return  Center(
                   child: CircularProgressIndicator(
                     color: Colors.green,
                     strokeWidth: 8.0,
                   ),
-                );
+                ); 
               }
        
               final int completeTodoCount = snapshot.data!
@@ -182,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                                  child: Text(
                                       'Completed Todo  $completeTodoCount of ${snapshot.data.length} ',
                                       style: TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.green,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 12.0,
                                       ),

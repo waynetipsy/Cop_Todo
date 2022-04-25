@@ -112,7 +112,7 @@ class _AddNoteState extends State<AddNote> {
      backgroundColor: Colors.grey.shade300,
      textColor: Colors.white,
      );
-       widget.updateTodoList!();
+       //widget.updateTodoList!();
      
    }
 
@@ -162,190 +162,188 @@ class _AddNoteState extends State<AddNote> {
    }
 
    
-  @override
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
+    resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      body:
-        GestureDetector(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        centerTitle: true,
+        title: Text('Add Todo Task',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+        )
         
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 40, vertical: 80.0
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  onTap: () => Navigator.pushReplacement(
+        ),
+        leading: GestureDetector(
+          onTap: () => Navigator.pushReplacement(
                     context, MaterialPageRoute(builder: (_) => HomePage(),)),
-                    child: Icon(Icons.arrow_back_ios,
-                    
-                    size: 30.0,
-                  color: Colors.black,
-                    ),
-                  ),
-                SizedBox(height: 50.0),
-                Text(titleText,
-                style: TextStyle(
-                color: Colors.black,
-                fontSize: 35,
-                fontWeight: FontWeight.bold,
-                 ),
-                ),
-                SizedBox(height: 20.0),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      Padding(padding: EdgeInsets.symmetric(vertical: 20.0),
-                      child: TextFormField(
-                        style: TextStyle(fontSize: 18.0),
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.title_outlined,
-                          ),
-                          labelText: 'Title',
-                          labelStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18.0 ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                          ),
-                          validator: (input) => 
-                        input!.trim().isEmpty ? 'Please enter title': null,
-                        onSaved: (input) => _title = input!,
-                       initialValue: _title,
-                        ),
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(vertical: 20.0),
-                         child: TextFormField(
-                           
-                           readOnly: true,
-                           controller: _dateController,
-                        style: TextStyle(fontSize: 18.0),
-                        onTap: _handleDataPicker,
-                        decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.date_range_outlined),
-                        //prefixIconColor: Colors.green,
-                          labelText: 'Date',
-                          labelStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18.0 ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical:20.0),
-                      child: DropdownButtonFormField(
-                         isDense: true,
-                        icon: Icon(Icons.arrow_drop_down_circle),
-                         iconSize: 22.0,
-                         iconEnabledColor: Colors.green,
-                         //value: _priority,
-                        items: _priorities.map((String priority) {
-                        
-                          return DropdownMenuItem(
-                            value: priority,
-                            child: Text(
-                              priority,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
+        child: Icon(Icons.arrow_back_ios),
+        ),
+        ),
+        
+      
+      body: SafeArea(
+          child: Form(
+                      key: _formKey,
+                      
+                        child: Column(
+                          children: [
+                            Padding(padding: EdgeInsets.all(16.0),
+                            
+                                child: TextFormField(
+                                  maxLines: 7,
+                                  style: TextStyle(fontSize: 18.0),
+                                  decoration: InputDecoration(
+                                    prefixIcon: Icon(Icons.task_alt_rounded,
+                                    ),
+                                    labelText: 'Enter todo',
+                                    labelStyle: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 15.0 ),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10.0),
+                                      ),
+                                    ),
+                                    validator: (input) => 
+                                  input!.trim().isEmpty ? 'Please enter title': null,
+                                  onSaved: (input) => _title = input!,
+                                 initialValue: _title,
+                                  ),
+                              ),
+                            
+                            Padding(
+                              padding: EdgeInsets.all(16.0),
+                               child: TextFormField(
+                                 
+                                 readOnly: true,
+                                 controller: _dateController,
+                              style: TextStyle(fontSize: 18.0),
+                              onTap: _handleDataPicker,
+                              decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.date_range_outlined),
+                              //prefixIconColor: Colors.green,
+                                labelText: 'Date',
+                                labelStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18.0 ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
                               ),
                             ),
-                          );
-                        }).toList(),
-                      style: TextStyle(fontSize: 18.0),
-                      decoration: InputDecoration(
-                        labelText: 'priority',
-                      labelStyle: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.black,
-                      ),
-                        border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)
-                        ),
-                      ),
-                  validator: (input) => _priority == null ? 'Please select a priority level' : null,
-                    // validator: (value) => value == null ? 'Please select a priority level' : null,    
-                      onChanged: (value) {
-                          setState(() {
-                            _priority = value.toString();
-                          
-                          });
-                         },
-                      value: _priority,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 20.0),
-                   height: 60.0,  
-                   width: double.infinity,
-                   decoration: BoxDecoration(
-                     color: Colors.green,
-                    borderRadius: BorderRadius.circular(30.0)
-                   ),
-                  child: ElevatedButton(
-                   style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0)
-                  ),
-                     primary: Colors.green,
-                   ),
-                    onPressed: _submit,
-                     child: Text(btnText,
-                     style: TextStyle(
-                       color: Colors.white,
-                       fontSize: 20.0,
+                          Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: DropdownButtonFormField(
+                              dropdownColor: Colors.grey.shade300,
+                               isDense: true,
+                              icon: Icon(Icons.arrow_drop_down_circle),
+                               iconSize: 22.0,
+                               iconEnabledColor: Colors.green,
+                               //value: _priority,
+                              items: _priorities.map((String priority) {
+                              
+                                return DropdownMenuItem(
+                                
+                                  value: priority,
+                                  child: Text(
+                                    priority,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18.0,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            style: TextStyle(fontSize: 18.0),
+                            decoration: InputDecoration(
+                             prefixIcon: Icon(Icons.priority_high_rounded),
+                              labelText: 'priority',
+                            labelStyle: TextStyle(
+                              fontSize: 18.0,
+                              color: Colors.black,
+                            ),
+                              border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0)
+                              ),
+                            ),
+                        validator: (input) => _priority == null ? 'Please select a priority level' : null,
+                          // validator: (value) => value == null ? 'Please select a priority level' : null,    
+                            onChanged: (value) {
+                                setState(() {
+                                  _priority = value.toString();
+                                
+                                });
+                               },
+                            value: _priority,
+                            ),
                           ),
+                          SizedBox(height: 10),
+                    Container(
+                        margin: EdgeInsets.symmetric(vertical: 3.0, horizontal: 25.0),
+                         height: 60.0,  
+                         width: double.infinity,
+                         decoration: BoxDecoration(
+                           color: Colors.green,
+                          borderRadius: BorderRadius.circular(30.0)
                          ),
+                        child: ElevatedButton(
+                         style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0)
+                        ),
+                           primary: Colors.green,
+                         ),
+                          onPressed: _submit,
+                           child: Text(btnText,
+                           style: TextStyle(
+                             color: Colors.white,
+                             fontSize: 20.0,
+                                ),
+                               ),
+                              ),
+                            ),
+                            SizedBox(height:12),
+                          widget.todo != null ? Container(
+                            
+                     margin: EdgeInsets.symmetric(vertical: 3.0, horizontal: 25.0),
+                    height: 60.0,  
+                    width: double.infinity, 
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    
+                    child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0)
+                    ),
+                        primary: Colors.green,
+                        ),
+                        onPressed: _delete,
+                        child: Text('Delete Todo',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0
+                            ),
+                           )
+                          ),
+                        ): SizedBox.shrink(),
+                          
+                    
+                          ]
                         ),
                       ),
-                    widget.todo != null ? Container(
-                 margin: EdgeInsets.symmetric(vertical: 20.0),
-                height: 60.0,  
-                width: double.infinity, 
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0)
-                ),
-                  primary: Colors.green,
-                  ),
-                  onPressed: _delete,
-                  child: Text('Delete Todo',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0
-                      ),
-                     )
-                    ),
-                  ): SizedBox.shrink(),
-                    ],
-                
-                  )
-                ),
-              ],
             ),
-          ),
-        ),
-        ),
-        
-    );  
-  }
+      
+      );
+      
+      }
 
   void add() async {
         CollectionReference ref = FirebaseFirestore.instance

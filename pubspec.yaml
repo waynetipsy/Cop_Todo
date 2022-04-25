@@ -64,7 +64,7 @@ flutter_app_name:
   name: "Cop Todo"
 
 flutter_native_splash:
-  colors: "#000000"
+  color: "#000000"
   image: "assets/todoappicon.png"  
   
 

@@ -56,7 +56,31 @@ class _MainDrawerState extends State<MainDrawer> {
           ),
         const  SizedBox(height: 25),
        
-           ListTile(
+        ListTile(
+          onTap: () {
+          showAboutDialog(context: context,
+          applicationLegalese: 'This is a task management app to help you stay organized and manage your day-to-day todo task.Built with Sqlite and Firebase',
+          applicationName: 'Todo Note App'
+           );
+          },
+          leading: const Icon(
+            Icons.info,
+            size: 25,
+            color: Colors.green,
+          ),
+          title: const Text(
+            'About App',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 25),
+
+         ListTile(
             onTap: () {
            showDialog(
             barrierDismissible: false,
@@ -81,28 +105,6 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
             ),
           ),
-       const  SizedBox(height: 30.0),
-        ListTile(
-          onTap: () {
-          showAboutDialog(context: context,
-          applicationLegalese: 'This is a task management app to help you stay organized and manage your day-to-day todo task.Built with Sqlite and Firebase',
-          applicationName: 'Todo Note App'
-           );
-          },
-          leading: const Icon(
-            Icons.info,
-            size: 25,
-            color: Colors.green,
-          ),
-          title: const Text(
-            'About App',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          ),
-        ),
         const Divider(
           color: Colors.grey,
         ),

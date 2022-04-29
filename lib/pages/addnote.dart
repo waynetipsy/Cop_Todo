@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_todo/screen/database/database.dart';
@@ -23,8 +25,6 @@ class _AddNoteState extends State<AddNote> {
 
   String _title  = '';
   String _priority = 'Low';
-  // late String description;
-  //int _status = 0;
   String btnText = 'Add Note';
   String titleText = 'Add Note';
   DateTime _date = DateTime.now();
@@ -128,6 +128,14 @@ class _AddNoteState extends State<AddNote> {
     
        );  
 
+       Fluttertoast.showToast(
+     msg: 'Todo has been created',
+     fontSize: 18,
+     gravity: ToastGravity.BOTTOM,
+     backgroundColor: Colors.grey.shade300,
+     textColor: Colors.white,
+     );
+
        if(widget.todo == null) {
         todo.status = 0;
         DatabaseHelper.instance.insertTodo(todo);
@@ -151,13 +159,7 @@ class _AddNoteState extends State<AddNote> {
          }
          //widget.updateTodoList!();
     }
-    Fluttertoast.showToast(
-     msg: 'Todo has been created',
-     fontSize: 18,
-     gravity: ToastGravity.BOTTOM,
-     backgroundColor: Colors.grey.shade300,
-     textColor: Colors.white,
-     );
+    
    }
 
    
@@ -171,6 +173,7 @@ class _AddNoteState extends State<AddNote> {
         centerTitle: true,
         title: Text('Add Todo Task',
         style: TextStyle(
+        color: Colors.green,
           fontWeight: FontWeight.bold,
         )
         
@@ -306,7 +309,7 @@ class _AddNoteState extends State<AddNote> {
                             SizedBox(height:12),
                           widget.todo != null ? Container(
                             
-                     margin: EdgeInsets.symmetric(vertical: 3.0, horizontal: 25.0),
+                    margin: EdgeInsets.symmetric(vertical: 3.0, horizontal: 25.0),
                     height: 60.0,  
                     width: double.infinity, 
                     decoration: BoxDecoration(

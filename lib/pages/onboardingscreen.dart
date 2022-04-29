@@ -38,9 +38,9 @@ class _OnboardingState extends State<Onboarding>  {
           child: PageView(
             controller: _pageController,
             children: [
-           onBoardPage('listdo',' Maintain your day-to-day tasks  '),
-           onBoardPage('todonowpreview', 'List everything that you have to do'),
-           onBoardPage('todoappicon', 'Your Daily Todo Reminder')
+           onBoardPage('todoappicon', 'Daily Todo Reminder'),
+           onBoardPage('todonowpreview', 'Save Future Tasks'),
+           onBoardPage('listdo', 'Prioritized Tasks '),
                 ],
         onPageChanged: (value) => (setCurrentPage(value)),
                ),
@@ -85,7 +85,7 @@ class _OnboardingState extends State<Onboarding>  {
             ),
            child:  Text('Get Started', 
            style: GoogleFonts.lato(
-             fontSize: 19,
+             fontSize: 20,
              fontWeight: FontWeight.bold,
              color: Colors.black,
            ) ,),   

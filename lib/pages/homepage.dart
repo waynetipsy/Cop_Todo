@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
 
   final DateFormat _dateFormatter = DateFormat('MMM dd, yyyy');
 
-  DatabaseHelper _databaseHelper = DatabaseHelper.instance;
+  //DatabaseHelper _databaseHelper = DatabaseHelper.instance;
 
   @override
   void initState() {
@@ -107,11 +107,11 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text(
-          'Todos List',
+          'Todo Task List',
           style: GoogleFonts.lato(
             fontSize: 22.0,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: Colors.green,
           ),
         ),
         elevation: 5.0,

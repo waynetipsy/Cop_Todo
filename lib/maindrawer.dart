@@ -59,8 +59,8 @@ class _MainDrawerState extends State<MainDrawer> {
         ListTile(
           onTap: () {
           showAboutDialog(context: context,
-          applicationLegalese: 'This is a task management app to help you stay organized and manage your day-to-day todo task.Built with Sqlite and Firebase',
-          applicationName: 'Todo Note App'
+          applicationLegalese: 'This is a task management app that helps you write, organize, and prioritize your tasks more efficiently and manage your day-to-day todo tasks.',
+          applicationName: 'Cop Todo'
            );
           },
           leading: const Icon(

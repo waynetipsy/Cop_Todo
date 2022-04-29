@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
       if (response.isNotEmpty) {
         connectStatus = true;
       }
-    } on SocketException catch (err) {
+    } on SocketException {
       connectStatus = false;
     }
     return connectStatus;
@@ -56,12 +56,12 @@ class _LoginPageState extends State<LoginPage> {
               ),
               speed: const Duration(milliseconds: 400)
              ),
-              TypewriterAnimatedText('To Your',
+              TypewriterAnimatedText('To',
              textStyle: const TextStyle(fontSize: 30,
              fontWeight: FontWeight.bold,
               ),
              ),
-              TypewriterAnimatedText('Todo App',
+              TypewriterAnimatedText('Cop Todo',
              textStyle: const TextStyle(fontSize: 30,
              fontWeight: FontWeight.bold,
               ),
@@ -79,13 +79,16 @@ class _LoginPageState extends State<LoginPage> {
              ),
             ),
         
-         const SizedBox(height: 50),
+         const SizedBox(height: 60),
         Padding(
           padding: const EdgeInsets.symmetric(
-           horizontal: 11,
+           horizontal: 7,
           ),
           child: ElevatedButton(
           style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+            ),
             primary: Colors.black,
             onPrimary: Colors.white,
             minimumSize: const Size(double.maxFinite, 65),

@@ -1,5 +1,5 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:login_todo/models/todo_model.dart';
+import 'package:cop_todo/models/todo_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 

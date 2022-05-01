@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:276323655765:android:856f584795fb54c9b4f4dc",
         "android_client_info": {
-          "package_name": "com.example.login_todo"
+          "package_name": "com.cop.cop_todo"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "276323655765-30rj3pnlg9o1l76vf2h0kc4e3qbslvb1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.login_todo",
+            "package_name": "com.cop.cop_todo",
             "certificate_hash": "72a9637dc727708e311d2558ca93857f420463bc"
           }
         },

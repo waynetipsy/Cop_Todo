@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.login_todo">
+    package="com.cop.cop_todo">
    <application
         android:label="Cop Todo"
         android:name="${applicationName}"

@@ -2,10 +2,10 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:login_todo/screen/database/database.dart';
+import 'package:cop_todo/screen/database/database.dart';
 import '../models/todo_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:login_todo/pages/homepage.dart';
+import 'package:cop_todo/pages/homepage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
@@ -180,7 +180,9 @@ class _AddNoteState extends State<AddNote> {
         ),
         leading: GestureDetector(
           onTap: () => Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (_) => HomePage(),)),
+                    context, MaterialPageRoute(builder: (_) => HomePage(),
+                    )
+                     ),
         child: Icon(Icons.arrow_back_ios),
         ),
         ),

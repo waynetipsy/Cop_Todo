@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:login_todo/pages/onboardingscreen.dart';
+import 'package:cop_todo/pages/onboardingscreen.dart';
 import 'custom_page_route.dart';
 import 'package:google_fonts/google_fonts.dart';
 import './google_auth.dart';

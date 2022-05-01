@@ -39,7 +39,7 @@ android {
         pickFirst 'lib/x86_64/libc++_shared.so'
         pickFirst 'lib/armeabi-v7a/libc++_shared.so'
         pickFirst 'lib/arm64-v8a/libc++_shared.so'
-}
+} 
 
     compileSdkVersion 31
 
@@ -58,12 +58,12 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.login_todo"
+        applicationId "com.cop.cop_todo" 
         minSdkVersion 21
         targetSdkVersion 30
         multiDexEnabled true
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode 2
+        versionName "1.1"
     }
 
    signingConfigs {
@@ -80,8 +80,6 @@ android {
        }
    }
 
-    
-    
 }
 
 flutter {
@@ -92,3 +90,4 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation platform('com.google.firebase:firebase-bom:29.0.4')
 }
+apply plugin: 'com.google.gms.google-services'

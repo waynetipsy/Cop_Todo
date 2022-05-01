@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:login_todo/pages/homepage.dart';
-import 'package:login_todo/pages/onboardingscreen.dart';
+import 'package:cop_todo/pages/homepage.dart';
+import 'package:cop_todo/pages/onboardingscreen.dart';
   
 
   class AuthChange extends StatelessWidget {

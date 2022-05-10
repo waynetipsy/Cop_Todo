@@ -144,9 +144,11 @@ class _OnboardingState extends State<Onboarding>  {
       ),
     Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 35),
-      child:  Text('Todo App!',
-       style: GoogleFonts.lato(fontSize: 16, 
+      child:  Text('Cop Todo',
+       style: TextStyle(
+         fontSize: 22, 
        color:  Colors.black,
+       fontWeight: FontWeight.bold,
        ), 
        textAlign: TextAlign.center,
         ),

@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "276323655765",
-    "project_id": "login-todo-81b47",
-    "storage_bucket": "login-todo-81b47.appspot.com"
+    "project_number": "973409989619",
+    "project_id": "coptodo-ceb38",
+    "storage_bucket": "coptodo-ceb38.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:276323655765:android:856f584795fb54c9b4f4dc",
+        "mobilesdk_app_id": "1:973409989619:android:cdc86aacb2bf119148d886",
         "android_client_info": {
           "package_name": "com.cop.cop_todo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "276323655765-30rj3pnlg9o1l76vf2h0kc4e3qbslvb1.apps.googleusercontent.com",
+          "client_id": "973409989619-rbc3fp8bjk7flpn02qbbh6n9tcm9is33.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.cop.cop_todo",
@@ -22,20 +22,20 @@
           }
         },
         {
-          "client_id": "276323655765-ikn008t8ea3aft6sg12tr99fjqi58jl4.apps.googleusercontent.com",
+          "client_id": "973409989619-5o6a5l41qbknr1p0br9qmlr26tn5293i.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCtY-Ahbg_P51i66vVyYhOPOKMfCeGoHe0"
+          "current_key": "AIzaSyDyis2hONiBUYCgvSd_FA_gtmx7ly8VwFg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "276323655765-ikn008t8ea3aft6sg12tr99fjqi58jl4.apps.googleusercontent.com",
+              "client_id": "973409989619-5o6a5l41qbknr1p0br9qmlr26tn5293i.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

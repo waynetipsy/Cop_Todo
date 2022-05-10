@@ -1,9 +1,10 @@
 import 'dart:io';
+import 'package:cop_todo/pages/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import '../google_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({ Key? key }) : super(key: key);
@@ -72,7 +73,8 @@ class _LoginPageState extends State<LoginPage> {
         const SizedBox(height: 10),
        Align(alignment: Alignment.center,
         child:  Text('Login to your account to continue',
-              style: GoogleFonts.lato(fontSize: 16,
+              style: GoogleFonts.lato(
+                fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Colors.green,
               ),
@@ -97,11 +99,8 @@ class _LoginPageState extends State<LoginPage> {
             onPressed: () async { 
              final _internetConnection = await _checkInternetConnection();
               if (_internetConnection) {
-                 await signInWithGoogle(context);
-              
-           SharedPreferences.getInstance().then((pref) => {
-             pref.setBool('Signin', true)
-           });
+                 await FirebaseService().signInwithGoogle();
+                 Navigator.push(context, MaterialPageRoute(builder:(context) => HomePage()));
               }else {
                 showDialog<void>(
                     context: context,

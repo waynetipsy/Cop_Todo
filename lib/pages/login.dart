@@ -3,7 +3,7 @@ import 'package:cop_todo/pages/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import '../google_auth.dart';
+import '../models/google_auth.dart';
 
 
 class LoginPage extends StatefulWidget {

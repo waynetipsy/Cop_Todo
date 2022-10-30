@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import './login.dart';
-import '../custom_page_route.dart';
+import '../widgets/custom_page_route.dart';
 
 
 class Onboarding extends StatefulWidget {

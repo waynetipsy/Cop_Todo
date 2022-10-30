@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import './custom_page_route.dart';
+import 'custom_page_route.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:cop_todo/logout.dart';
-import './pages/homepage.dart';
+import 'package:cop_todo/widgets/logout.dart';
+import '../pages/homepage.dart';
 
 class MainDrawer extends StatefulWidget {
   const MainDrawer({Key? key}) : super(key: key);

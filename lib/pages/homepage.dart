@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'addnote.dart';
 import '../models/todo_model.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../screen/database/database.dart';
+import '../database/database.dart';
 import '../pages/addnote.dart';
-import '../maindrawer.dart';
+import '../widgets/maindrawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
